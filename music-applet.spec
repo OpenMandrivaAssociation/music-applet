@@ -1,3 +1,6 @@
+%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%global	python_module_name	musicapplet
+
 %define name music-applet
 %define version 2.2.0
 %define release %mkrel 1
@@ -13,16 +16,37 @@ License: GPL
 Group: Monitoring
 Url: http://www.kuliniewicz.org/music-applet/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: gnome-panel-devel
-BuildRequires: libeel-devel
-BuildRequires: scrollkeeper
-BuildRequires: perl-XML-Parser
-BuildRequires: rhythmbox
-BuildRequires: banshee
-BuildRequires: muine
-BuildRequires: pygtk2.0-devel
-Requires: rhythmbox
-Requires: pygtk2.0-libglade
+BuildRequires:	GConf2
+BuildRequires:	gettext
+BuildRequires:	gnome-panel-devel
+BuildRequires:	perl(XML::Parser)
+BuildRequires:	pygtk2.0-devel
+BuildRequires:	python-devel
+BuildRequires:	pygtk2.0-libglade
+
+Requires:	dbus-python >= 0.80
+Requires:	gnome-python2-applet
+Requires:	gnome-python2-gconf
+Requires:	gnome-python2-gnomekeyring
+Requires:	hicolor-icon-theme
+Requires:	notify-python
+Requires:	pygtk2
+Requires:	python-numeric
+Requires:	PyXML
+
+Requires(pre):	GConf2
+
+Requires(post):	GConf2
+
+Requires(preun):	GConf2
+
+Provides:	gnome-applet-rhythmbox
+Provides:	music-applet
+Provides:	rhythmbox-applet
+
+Obsoletes:	gnome-applet-rhythmbox
+Obsoletes:	music-applet
+Obsoletes:	rhythmbox-applet
 
 %description
 Rhythmbox Applet is a small, simple GNOME panel applet 
@@ -61,16 +85,18 @@ rm -rf %buildroot
 %clean
 rm -rf %buildroot
 
-%files -f %name.lang
-%defattr(-,root,root)
-%doc AUTHORS ChangeLog COPYING NEWS README THANKS
-%{_sysconfdir}/gconf/schemas/%{name}.schemas
+%files -f music-applet.lang
+%defattr(-,root,root,-)
+%doc AUTHORS ChangeLog COPYING FAQ NEWS README README.plugins THANKS   
+%{_sysconfdir}/gconf/schemas/music-applet.schemas
 %{_libdir}/bonobo/servers/GNOME_Music_Applet.server
-%{_libdir}/music-applet
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*.png
 %{_libdir}/gnome-2.0/ui/GNOME_Music_Applet.xml
-%{_datadir}/%{name}/*.glade
-%{py_platsitedir}/musicapplet/*
-%{_datadir}/icons/*
-
+%dir %{python_sitelib}/%{python_module_name}/
+%dir %{python_sitelib}/%{python_module_name}/plugins
+%exclude %{python_sitelib}/%{python_module_name}/*.la
+%{python_sitelib}/%{python_module_name}/*.py*
+%{python_sitelib}/%{python_module_name}/plugins/*.py*
+%{python_sitelib}/%{python_module_name}/*.so
+%{_libexecdir}/music-applet/
+%{_datadir}/music-applet/
+%{_datadir}/icons/hicolor/*/apps/music-applet-*
