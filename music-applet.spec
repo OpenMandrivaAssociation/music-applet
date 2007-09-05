@@ -6,7 +6,7 @@ Summary: Music control applet for the GNOME panel
 Name: %{name}
 Version: %{version}
 Release: %{release}
-#Epoch: 1
+Epoch: 1
 Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.bz2
 Patch1: src.musicapplet.applet.py.patch 
 License: GPL
