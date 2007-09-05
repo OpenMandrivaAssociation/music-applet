@@ -1,13 +1,14 @@
 %define name music-applet
-%define version 0.9.2
+%define version 2.2.0
 %define release %mkrel 1
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Epoch: 1
+#Epoch: 1
 Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.bz2
+Patch1: src.musicapplet.applet.py.patch 
 License: GPL
 Group: Monitoring
 Url: http://www.kuliniewicz.org/music-applet/
@@ -40,6 +41,8 @@ Rhythmbox puts in the notification area include:
 %prep
 %setup -q
 
+%patch1 -p1 -b .musicapplet
+
 %build
 %configure2_5x
 %make
@@ -66,7 +69,8 @@ rm -rf %buildroot
 %{_libdir}/music-applet
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/*.png
-%{_datadir}/gnome-2.0/ui/GNOME_Music_Applet.xml
+%{_libdir}/gnome-2.0/ui/GNOME_Music_Applet.xml
 %{_datadir}/%{name}/*.glade
-
+%{py_platsitedir}/musicapplet/*
+%{_datadir}/icons/*
 
