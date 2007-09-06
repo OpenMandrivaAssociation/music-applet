@@ -23,11 +23,13 @@ BuildRequires:	perl(XML::Parser)
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	python-devel
 BuildRequires:	pygtk2.0-libglade
+BuildRequires:  gnome-python
 
 Requires:	dbus-python >= 0.80
-Requires:	gnome-python2-applet
-Requires:	gnome-python2-gconf
-Requires:	gnome-python2-gnomekeyring
+Requires:	gnome-python-applet
+Requires:	gnome-python-applet
+Requires:	gnome-python-gconf
+Requires:	gnome-python-gnomekeyring
 Requires:	hicolor-icon-theme
 Requires:	notify-python
 Requires:	pygtk2
