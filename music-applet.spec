@@ -3,7 +3,7 @@
 
 %define name music-applet
 %define version 2.2.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
