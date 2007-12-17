@@ -15,7 +15,6 @@ Patch1: src.musicapplet.applet.py.patch
 License: GPL
 Group: Monitoring
 Url: http://www.kuliniewicz.org/music-applet/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	GConf2
 BuildRequires:	gettext
 BuildRequires:	gnome-panel-devel
