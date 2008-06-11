@@ -1,4 +1,3 @@
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 %global	python_module_name	musicapplet
 
 %define name music-applet
@@ -151,7 +150,6 @@ rm -rf %buildroot
 %{_libdir}/gnome-2.0/ui/GNOME_Music_Applet.xml
 %dir %{python_sitelib}/%{python_module_name}/
 %dir %{python_sitelib}/%{python_module_name}/plugins
-%exclude %{python_sitelib}/%{python_module_name}/*.la
 %{python_sitelib}/%{python_module_name}/*.py*
 %{python_sitelib}/%{python_module_name}/plugins/__init__*
 %{python_sitelib}/%{python_module_name}/plugins/audacious*
@@ -163,7 +161,8 @@ rm -rf %buildroot
 %{python_sitelib}/%{python_module_name}/plugins/quodlibet*
 %{python_sitelib}/%{python_module_name}/plugins/rhythmbox*
 %{python_sitelib}/%{python_module_name}/plugins/vlc*
-%{python_sitelib}/%{python_module_name}/*.so
+%{py_platsitedir}/%{python_module_name}/widgets.so
+%exclude %{py_platsitedir}/%{python_module_name}/*.la
 %{_libexecdir}/music-applet/
 %{_datadir}/music-applet/
 %{_datadir}/icons/hicolor/*/apps/music-applet-*
