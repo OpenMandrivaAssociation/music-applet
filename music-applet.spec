@@ -20,6 +20,7 @@ BuildRequires:	GConf2
 BuildRequires:	gettext
 BuildRequires:	gnome-panel-devel
 BuildRequires:	intltool
+BuildRequires:	libglade2.0-devel
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	pygtk2.0-libglade
 BuildRequires:  gnome-python-devel
