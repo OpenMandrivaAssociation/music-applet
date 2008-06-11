@@ -2,7 +2,7 @@
 %global	python_module_name	musicapplet
 
 %define name music-applet
-%define version 2.2.1
+%define version 2.4.0
 %define release %mkrel 1
 
 Summary: Music control applet for the GNOME panel
@@ -10,59 +10,110 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Epoch: 1
-Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.bz2
+Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.gz
 Patch1: src.musicapplet.applet.py.patch
 License: GPL
-Group: Monitoring
+Group: Sound
 Url: http://www.kuliniewicz.org/music-applet/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	GConf2
 BuildRequires:	gettext
 BuildRequires:	gnome-panel-devel
-BuildRequires:	perl(XML::Parser)
+BuildRequires:	intltool
 BuildRequires:	pygtk2.0-devel
-BuildRequires:	python-devel
 BuildRequires:	pygtk2.0-libglade
-BuildRequires:  gnome-python
-
+BuildRequires:  gnome-python-devel
+BuildRequires:  python-kde python-dcop
+BuildRequires:  python-xmms2
+BuildRequires:  pyxmms
+#gw not yet packaged:
+#BuildRequires:  python-mpdclient2
 Requires:	dbus-python >= 0.80
 Requires:	gnome-python-applet
 Requires:	gnome-python-applet
 Requires:	gnome-python-gconf
-Requires:	gnome-python-gnomekeyring
+Requires:	gnome-python-desktop
 Requires:	hicolor-icon-theme
-Requires:	notify-python
-Requires:	pygtk2
+Requires:	python-notify
+Requires:	pygtk2.0
 Requires:	python-numeric
 Requires:	PyXML
 
-Requires(pre):	GConf2
-
 Requires(post):	GConf2
-
 Requires(preun):	GConf2
 
 Provides:	gnome-applet-rhythmbox
-Provides:	music-applet
 Provides:	rhythmbox-applet
-
 Obsoletes:	gnome-applet-rhythmbox
-Obsoletes:	music-applet
 Obsoletes:	rhythmbox-applet
 
 %description
-Rhythmbox Applet is a small, simple GNOME panel applet
-that lets you control Rhythmbox's playback from a panel.
+Music Applet is a small, simple GNOME panel applet that lets you
+control a variety of different music players from the panel.
 
-Advantages that this applet has over using the icon
-Rhythmbox puts in the notification area include:
+Music Applet provides easy access to information about the current
+song and the most important playback controls.
 
-    * One-click access to the main operations needed
-      during playback, without needing to use a context menu.
-    * Display of the current playing time without
-      requiring a mouse-over.
-    * Display of the current song's album in the song information.
-    * More in the spirit of the GNOME Human Interface Guidelines.
+Music Applet currently supports the following music players:
+
+* Amarok
+* Audacious
+* Banshee
+* Exaile
+* MPD
+* Muine
+* Quod Libet
+* Rhythmbox
+* VLC
+* XMMS
+* XMMS2
+
+Music Applet is the successor to Rhythmbox Applet.
+
+%package amarok
+Group: Sound
+Summary: Music control applet for the GNOME panel - Amarok plugin
+Requires: %name = %epoch:%version
+Requires: python-kde python-dcop
+%description amarok
+Music Applet is a small, simple GNOME panel applet that lets you
+control a variety of different music players from the panel.
+
+Music Applet provides easy access to information about the current
+song and the most important playback controls.
+
+Install this for Amarok support.
+
+%package xmms
+Group: Sound
+Summary: Music control applet for the GNOME panel - xmms 1 plugin
+Requires: %name = %epoch:%version
+Requires: pyxmms
+
+%description xmms
+Music Applet is a small, simple GNOME panel applet that lets you
+control a variety of different music players from the panel.
+
+Music Applet provides easy access to information about the current
+song and the most important playback controls.
+
+Install this for xmms 1 support.
+
+%package xmms2
+Group: Sound
+Summary: Music control applet for the GNOME panel - xmms 2 plugin
+Requires: %name = %epoch:%version
+Requires: python-xmms2
+
+%description xmms2
+Music Applet is a small, simple GNOME panel applet that lets you
+control a variety of different music players from the panel.
+
+Music Applet provides easy access to information about the current
+song and the most important playback controls.
+
+Install this for xmms 2 support.
+
 
 %prep
 %setup -q
@@ -80,9 +131,13 @@ rm -rf %buildroot
 
 %post
 %post_install_gconf_schemas %name
+%update_icon_cache hicolor
 
 %preun
 %preun_uninstall_gconf_schemas %name
+
+%postun
+%clean_icon_cache hicolor
 
 %clean
 rm -rf %buildroot
@@ -97,8 +152,29 @@ rm -rf %buildroot
 %dir %{python_sitelib}/%{python_module_name}/plugins
 %exclude %{python_sitelib}/%{python_module_name}/*.la
 %{python_sitelib}/%{python_module_name}/*.py*
-%{python_sitelib}/%{python_module_name}/plugins/*.py*
+%{python_sitelib}/%{python_module_name}/plugins/__init__*
+%{python_sitelib}/%{python_module_name}/plugins/audacious*
+%{python_sitelib}/%{python_module_name}/plugins/banshee*
+%{python_sitelib}/%{python_module_name}/plugins/exaile*
+#gw needs unpackaged module
+%exclude %{python_sitelib}/%{python_module_name}/plugins/mpd*
+%{python_sitelib}/%{python_module_name}/plugins/muine*
+%{python_sitelib}/%{python_module_name}/plugins/quodlibet*
+%{python_sitelib}/%{python_module_name}/plugins/rhythmbox*
+%{python_sitelib}/%{python_module_name}/plugins/vlc*
 %{python_sitelib}/%{python_module_name}/*.so
 %{_libexecdir}/music-applet/
 %{_datadir}/music-applet/
 %{_datadir}/icons/hicolor/*/apps/music-applet-*
+
+%files amarok
+%defattr(-,root,root,-)
+%{python_sitelib}/%{python_module_name}/plugins/amarok*
+
+%files xmms
+%defattr(-,root,root,-)
+%{python_sitelib}/%{python_module_name}/plugins/xmms1*
+
+%files xmms2
+%defattr(-,root,root,-)
+%{python_sitelib}/%{python_module_name}/plugins/xmms2*
