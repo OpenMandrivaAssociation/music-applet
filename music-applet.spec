@@ -2,7 +2,7 @@
 
 %define name music-applet
 %define version 2.4.0
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
@@ -11,6 +11,8 @@ Release: %{release}
 Epoch: 1
 Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.gz
 Patch1: src.musicapplet.applet.py.patch
+# From upstream: use python-kde not python-dcop - AdamW 2008/07
+Patch2: music-applet-amarok-dcopext.patch
 License: GPL
 Group: Sound
 Url: http://www.kuliniewicz.org/music-applet/
@@ -23,7 +25,7 @@ BuildRequires:	libglade2.0-devel
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	pygtk2.0-libglade
 BuildRequires:  gnome-python-devel
-BuildRequires:  python-kde python-dcop
+BuildRequires:  python-kde
 BuildRequires:  python-xmms2
 BuildRequires:  pyxmms
 #gw not yet packaged:
@@ -74,7 +76,7 @@ Music Applet is the successor to Rhythmbox Applet.
 Group: Sound
 Summary: Music control applet for the GNOME panel - Amarok plugin
 Requires: %name = %epoch:%version
-Requires: python-kde python-dcop
+Requires: python-kde
 %description amarok
 Music Applet is a small, simple GNOME panel applet that lets you
 control a variety of different music players from the panel.
@@ -117,8 +119,8 @@ Install this for xmms 2 support.
 
 %prep
 %setup -q
-
 %patch1 -p1 -b .musicapplet
+%patch2 -p0 -b .kde
 
 %build
 %configure2_5x
