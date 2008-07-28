@@ -1,8 +1,8 @@
 %global	python_module_name	musicapplet
 
 %define name music-applet
-%define version 2.4.0
-%define release %mkrel 3
+%define version 2.4.1
+%define release %mkrel 1
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
@@ -77,6 +77,7 @@ Group: Sound
 Summary: Music control applet for the GNOME panel - Amarok plugin
 Requires: %name = %epoch:%version
 Requires: python-kde
+
 %description amarok
 Music Applet is a small, simple GNOME panel applet that lets you
 control a variety of different music players from the panel.
