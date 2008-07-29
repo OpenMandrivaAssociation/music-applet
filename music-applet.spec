@@ -11,8 +11,6 @@ Release: %{release}
 Epoch: 1
 Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.gz
 Patch1: src.musicapplet.applet.py.patch
-# From upstream: use python-kde not python-dcop - AdamW 2008/07
-Patch2: music-applet-amarok-dcopext.patch
 License: GPL
 Group: Sound
 Url: http://www.kuliniewicz.org/music-applet/
@@ -121,7 +119,6 @@ Install this for xmms 2 support.
 %prep
 %setup -q
 %patch1 -p1 -b .musicapplet
-%patch2 -p0 -b .kde
 
 %build
 %configure2_5x
