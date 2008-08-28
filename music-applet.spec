@@ -2,7 +2,7 @@
 
 %define name music-applet
 %define version 2.4.2
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
@@ -10,8 +10,7 @@ Version: %{version}
 Release: %{release}
 Epoch: 1
 Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.gz
-Patch1: src.musicapplet.applet.py.patch
-License: GPL
+License: GPLv2+
 Group: Sound
 Url: http://www.kuliniewicz.org/music-applet/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
@@ -118,7 +117,6 @@ Install this for xmms 2 support.
 
 %prep
 %setup -q
-%patch1 -p1 -b .musicapplet
 
 %build
 %configure2_5x
