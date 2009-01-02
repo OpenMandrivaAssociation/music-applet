@@ -1,8 +1,8 @@
 %global	python_module_name	musicapplet
 
 %define name music-applet
-%define version 2.4.2
-%define release %mkrel 3
+%define version 2.5.0
+%define release %mkrel 1
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
