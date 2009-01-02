@@ -153,6 +153,7 @@ rm -rf %buildroot
 %{python_sitelib}/%{python_module_name}/plugins/audacious*
 %{python_sitelib}/%{python_module_name}/plugins/banshee*
 %{python_sitelib}/%{python_module_name}/plugins/exaile*
+%{python_sitelib}/%{python_module_name}/plugins/mpd*
 %{python_sitelib}/%{python_module_name}/plugins/muine*
 %{python_sitelib}/%{python_module_name}/plugins/quodlibet*
 %{python_sitelib}/%{python_module_name}/plugins/rhythmbox*
