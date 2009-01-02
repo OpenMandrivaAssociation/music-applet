@@ -25,8 +25,7 @@ BuildRequires:  gnome-python-devel
 BuildRequires:  python-kde
 BuildRequires:  python-xmms2
 BuildRequires:  pyxmms
-#gw not yet packaged:
-#BuildRequires:  python-mpdclient2
+BuildRequires:  python-mpd
 Requires:	dbus-python >= 0.80
 Requires:	gnome-python-applet
 Requires:	gnome-python-applet
@@ -37,6 +36,7 @@ Requires:	python-notify
 Requires:	pygtk2.0
 Requires:	python-numeric
 Requires:	PyXML
+Requires:  python-mpd
 
 Requires(post):	GConf2
 Requires(preun):	GConf2
@@ -153,8 +153,6 @@ rm -rf %buildroot
 %{python_sitelib}/%{python_module_name}/plugins/audacious*
 %{python_sitelib}/%{python_module_name}/plugins/banshee*
 %{python_sitelib}/%{python_module_name}/plugins/exaile*
-#gw needs unpackaged module
-%exclude %{python_sitelib}/%{python_module_name}/plugins/mpd*
 %{python_sitelib}/%{python_module_name}/plugins/muine*
 %{python_sitelib}/%{python_module_name}/plugins/quodlibet*
 %{python_sitelib}/%{python_module_name}/plugins/rhythmbox*
