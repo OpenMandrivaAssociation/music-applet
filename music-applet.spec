@@ -2,7 +2,7 @@
 
 %define name music-applet
 %define version 2.5.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
@@ -22,7 +22,6 @@ BuildRequires:	libglade2.0-devel
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	pygtk2.0-libglade
 BuildRequires:  gnome-python-devel
-BuildRequires:  python-kde
 BuildRequires:  python-xmms2
 BuildRequires:  pyxmms
 BuildRequires:  python-mpd
@@ -45,6 +44,8 @@ Provides:	gnome-applet-rhythmbox
 Provides:	rhythmbox-applet
 Obsoletes:	gnome-applet-rhythmbox
 Obsoletes:	rhythmbox-applet
+Provides:	%name-amarok
+Obsoletes:	%name-amarok
 
 %description
 Music Applet is a small, simple GNOME panel applet that lets you
@@ -68,21 +69,6 @@ Music Applet currently supports the following music players:
 * XMMS2
 
 Music Applet is the successor to Rhythmbox Applet.
-
-%package amarok
-Group: Sound
-Summary: Music control applet for the GNOME panel - Amarok plugin
-Requires: %name = %epoch:%version
-Requires: python-kde
-
-%description amarok
-Music Applet is a small, simple GNOME panel applet that lets you
-control a variety of different music players from the panel.
-
-Music Applet provides easy access to information about the current
-song and the most important playback controls.
-
-Install this for Amarok support.
 
 %package xmms
 Group: Sound
@@ -119,13 +105,18 @@ Install this for xmms 2 support.
 %setup -q
 
 %build
-%configure2_5x
+%configure2_5x --disable-schemas-install
 %make
 
 %install
 rm -rf %buildroot
 %makeinstall_std
 %find_lang %name --with-gnome
+%if %_lib != lib
+mv %buildroot%py_puresitedir/%python_module_name/* %buildroot%py_platsitedir/%python_module_name
+%endif
+#gw kde 3.x
+rm -f %buildroot%py_platsitedir/%python_module_name/plugins/amarok.*
 
 %post
 %post_install_gconf_schemas %name
@@ -146,32 +137,29 @@ rm -rf %buildroot
 %{_sysconfdir}/gconf/schemas/music-applet.schemas
 %{_libdir}/bonobo/servers/GNOME_Music_Applet.server
 %{_libdir}/gnome-2.0/ui/GNOME_Music_Applet.xml
-%dir %{python_sitelib}/%{python_module_name}/
-%dir %{python_sitelib}/%{python_module_name}/plugins
-%{python_sitelib}/%{python_module_name}/*.py*
-%{python_sitelib}/%{python_module_name}/plugins/__init__*
-%{python_sitelib}/%{python_module_name}/plugins/audacious*
-%{python_sitelib}/%{python_module_name}/plugins/banshee*
-%{python_sitelib}/%{python_module_name}/plugins/exaile*
-%{python_sitelib}/%{python_module_name}/plugins/mpd*
-%{python_sitelib}/%{python_module_name}/plugins/muine*
-%{python_sitelib}/%{python_module_name}/plugins/quodlibet*
-%{python_sitelib}/%{python_module_name}/plugins/rhythmbox*
-%{python_sitelib}/%{python_module_name}/plugins/vlc*
+%dir %{py_platsitedir}/%{python_module_name}/
+%dir %{py_platsitedir}/%{python_module_name}/plugins
+%{py_platsitedir}/%{python_module_name}/*.py*
+%{py_platsitedir}/%{python_module_name}/plugins/__init__*
+%{py_platsitedir}/%{python_module_name}/plugins/amarok*
+%{py_platsitedir}/%{python_module_name}/plugins/audacious*
+%{py_platsitedir}/%{python_module_name}/plugins/banshee*
+%{py_platsitedir}/%{python_module_name}/plugins/exaile*
+%{py_platsitedir}/%{python_module_name}/plugins/mpd*
+%{py_platsitedir}/%{python_module_name}/plugins/muine*
+%{py_platsitedir}/%{python_module_name}/plugins/quodlibet*
+%{py_platsitedir}/%{python_module_name}/plugins/rhythmbox*
+%{py_platsitedir}/%{python_module_name}/plugins/vlc*
 %{py_platsitedir}/%{python_module_name}/widgets.so
 %exclude %{py_platsitedir}/%{python_module_name}/*.la
 %{_libexecdir}/music-applet/
 %{_datadir}/music-applet/
 %{_datadir}/icons/hicolor/*/apps/music-applet-*
 
-%files amarok
-%defattr(-,root,root,-)
-%{python_sitelib}/%{python_module_name}/plugins/amarok*
-
 %files xmms
 %defattr(-,root,root,-)
-%{python_sitelib}/%{python_module_name}/plugins/xmms1*
+%{py_platsitedir}/%{python_module_name}/plugins/xmms1*
 
 %files xmms2
 %defattr(-,root,root,-)
-%{python_sitelib}/%{python_module_name}/plugins/xmms2*
+%{py_platsitedir}/%{python_module_name}/plugins/xmms2*
