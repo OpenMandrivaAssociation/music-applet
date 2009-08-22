@@ -2,7 +2,7 @@
 
 %define name music-applet
 %define version 2.5.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 Summary: Music control applet for the GNOME panel
 Name: %{name}
@@ -106,15 +106,14 @@ Install this for xmms 2 support.
 
 %build
 %configure2_5x --disable-schemas-install
-%make
+#gw install all python modules in the arch-dependant dir, else the C module
+#is not found by python
+%make pythondir=%py_platsitedir
 
 %install
 rm -rf %buildroot
-%makeinstall_std
+%makeinstall_std pythondir=%py_platsitedir
 %find_lang %name --with-gnome
-%if %_lib != lib
-mv %buildroot%py_puresitedir/%python_module_name/* %buildroot%py_platsitedir/%python_module_name
-%endif
 #gw kde 3.x
 rm -f %buildroot%py_platsitedir/%python_module_name/plugins/amarok.*
 
