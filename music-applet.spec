@@ -2,8 +2,8 @@
 
 %define name music-applet
 %define version 2.5.1
-%define release %mkrel 3
-
+%define release %mkrel 4
+%define build_xmms2 0
 Summary: Music control applet for the GNOME panel
 Name: %{name}
 Version: %{version}
@@ -22,7 +22,6 @@ BuildRequires:	libglade2.0-devel
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	pygtk2.0-libglade
 BuildRequires:  gnome-python-devel
-BuildRequires:  python-xmms2
 BuildRequires:  pyxmms
 BuildRequires:  python-mpd
 Requires:	dbus-python >= 0.80
@@ -66,7 +65,9 @@ Music Applet currently supports the following music players:
 * Rhythmbox
 * VLC
 * XMMS
+%if %build_xmms2
 * XMMS2
+%endif
 
 Music Applet is the successor to Rhythmbox Applet.
 
@@ -85,11 +86,13 @@ song and the most important playback controls.
 
 Install this for xmms 1 support.
 
+%if %build_xmms2
 %package xmms2
 Group: Sound
 Summary: Music control applet for the GNOME panel - xmms 2 plugin
 Requires: %name = %epoch:%version
 Requires: python-xmms2
+BuildRequires:  python-xmms2
 
 %description xmms2
 Music Applet is a small, simple GNOME panel applet that lets you
@@ -99,7 +102,7 @@ Music Applet provides easy access to information about the current
 song and the most important playback controls.
 
 Install this for xmms 2 support.
-
+%endif
 
 %prep
 %setup -q
@@ -159,6 +162,8 @@ rm -rf %buildroot
 %defattr(-,root,root,-)
 %{py_platsitedir}/%{python_module_name}/plugins/xmms1*
 
+%if %build_xmms2
 %files xmms2
 %defattr(-,root,root,-)
 %{py_platsitedir}/%{python_module_name}/plugins/xmms2*
+%endif
