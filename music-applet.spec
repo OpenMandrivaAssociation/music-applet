@@ -92,7 +92,6 @@ Group: Sound
 Summary: Music control applet for the GNOME panel - xmms 2 plugin
 Requires: %name = %epoch:%version
 Requires: python-xmms2
-BuildRequires:  python-xmms2
 
 %description xmms2
 Music Applet is a small, simple GNOME panel applet that lets you
@@ -119,6 +118,9 @@ rm -rf %buildroot
 %find_lang %name --with-gnome
 #gw kde 3.x
 rm -f %buildroot%py_platsitedir/%python_module_name/plugins/amarok.*
+%if !%build_xmms2
+rm -f %buildroot%{py_platsitedir}/%{python_module_name}/plugins/xmms2*
+%endif
 
 %post
 %post_install_gconf_schemas %name
