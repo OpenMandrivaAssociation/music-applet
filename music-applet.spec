@@ -2,7 +2,7 @@
 
 %define name music-applet
 %define version 2.5.1
-%define release %mkrel 4
+%define release %mkrel 5
 %define build_xmms2 0
 Summary: Music control applet for the GNOME panel
 Name: %{name}
