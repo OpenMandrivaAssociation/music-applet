@@ -156,7 +156,6 @@ rm -rf %buildroot
 %{py_platsitedir}/%{python_module_name}/plugins/rhythmbox*
 %{py_platsitedir}/%{python_module_name}/plugins/vlc*
 %{py_platsitedir}/%{python_module_name}/widgets.so
-%exclude %{py_platsitedir}/%{python_module_name}/*.la
 %{_libexecdir}/music-applet/
 %{_datadir}/music-applet/
 %{_datadir}/icons/hicolor/*/apps/music-applet-*
