@@ -120,6 +120,7 @@ rm -rf %buildroot
 rm -f %buildroot%py_platsitedir/%python_module_name/plugins/amarok.*
 %if !%build_xmms2
 rm -f %buildroot%{py_platsitedir}/%{python_module_name}/plugins/xmms2*
+rm -f %buildroot%{py_platsitedir}/%{python_module_name}/widgets.la
 %endif
 
 %post
