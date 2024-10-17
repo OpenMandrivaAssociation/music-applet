@@ -12,7 +12,7 @@ Epoch: 1
 Source0: http://www.kuliniewicz.org/music-applet/downloads/%{name}-%{version}.tar.gz
 License: GPLv2+
 Group: Sound
-Url: http://www.kuliniewicz.org/music-applet/
+Url: https://www.kuliniewicz.org/music-applet/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	GConf2
 BuildRequires:	gettext
